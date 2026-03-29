@@ -3982,3 +3982,165 @@ You should say:
 
 ---
 
+this is the **clean, interview-ready pattern** that combines:
+
+✅ progress logging
+✅ timeout handling
+✅ cancellation
+✅ fallback
+
+---
+
+# 🚀 Perfect Pattern: Progress + Timeout + Cancel
+
+```java
+import java.util.concurrent.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        Future<Integer> future = executor.submit(() -> {
+            System.out.println("Task started...");
+            for (int i = 1; i <= 5; i++) {
+                Thread.sleep(1000); // simulate work
+                System.out.println("Working... " + i);
+            }
+            return 100;
+        });
+
+        try {
+            int timeout = 3; // seconds
+            int waited = 0;
+
+            while (true) {
+                if (future.isDone()) {
+                    // Task finished normally
+                    Integer result = future.get();
+                    System.out.println("Result: " + result);
+                    break;
+                }
+
+                if (waited >= timeout) {
+                    // Timeout reached → cancel task
+                    System.out.println("Timeout reached! Cancelling task...");
+                    future.cancel(true);
+                    System.out.println("Using fallback value: -1");
+                    break;
+                }
+
+                System.out.println("Main thread: waiting...");
+                Thread.sleep(1000);
+                waited++;
+            }
+
+        } catch (CancellationException e) {
+            System.out.println("Task was cancelled!");
+
+        } catch (ExecutionException e) {
+            System.out.println("Task failed: " + e.getCause());
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        executor.shutdown();
+    }
+}
+```
+
+---
+
+# 🧠 What’s happening step-by-step
+
+### ⏱ Timeline (Task = 5 sec, Timeout = 3 sec)
+
+```text
+Task started...
+Working... 1
+Main thread: waiting...
+Working... 2
+Main thread: waiting...
+Working... 3
+Main thread: waiting...
+Timeout reached! Cancelling task...
+Using fallback value: -1
+```
+
+---
+
+# 🔍 Why this pattern is powerful
+
+### ✅ 1. Non-blocking monitoring
+
+```java
+future.isDone()
+```
+
+* You don’t block immediately
+* You can log progress
+
+---
+
+### ✅ 2. Controlled timeout
+
+```java
+if (waited >= timeout)
+```
+
+* Full control over timing logic
+
+---
+
+### ✅ 3. Safe cancellation
+
+```java
+future.cancel(true);
+```
+
+* Stops task properly
+
+---
+
+### ✅ 4. Fallback handling
+
+```java
+System.out.println("Using fallback value: -1");
+```
+
+* Keeps system stable
+
+---
+
+# ⚠️ Important Detail (Very Interview Important)
+
+Your task must support interruption:
+
+```java
+Thread.sleep(1000);
+```
+
+👉 If your task ignores interruption → cancel **won’t work properly**
+
+---
+
+# 🔥 When to use this pattern
+
+* API calls with timeout
+* Payment processing
+* File uploads/downloads
+* Microservices communication
+* Retry systems
+
+---
+
+# 🟢 Final Takeaway
+
+👉 This pattern gives you:
+
+* Control ✅
+* Safety ✅
+* Observability ✅
+
+---
