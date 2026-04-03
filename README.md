@@ -4639,3 +4639,446 @@ You should say:
 > CompletableFuture provides methods for creating async tasks like supplyAsync(), transforming results using thenApply() and thenCompose(), consuming results using thenAccept(), combining multiple tasks using thenCombine() and allOf(), and handling errors using exceptionally() and handle(). It also supports async variants and non-blocking chaining, making it suitable for scalable backend systems.
 
 ---
+
+# 🔵 **1️⃣ ThreadLocal in Java – Per-Thread Storage (Critical for Web Apps)**
+
+`ThreadLocal<T>` is a special utility in Java that allows you to create **thread-specific variables**. Instead of sharing a variable across multiple threads, each thread gets its **own isolated copy**.
+
+In simple terms:
+👉 Same variable name
+👉 Different value per thread
+
+This is extremely useful in multi-threaded environments like **web applications**, where each request is handled by a separate thread.
+
+---
+
+# 🟣 **2️⃣ Why ThreadLocal is Needed (Real Problem)**
+
+In multi-threading, if multiple threads access the same variable, it leads to:
+
+* Data inconsistency
+* Race conditions
+* Security issues
+
+ThreadLocal solves this by isolating data:
+
+```java id="tl1"
+ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+```
+
+Each thread will store and retrieve its own value independently.
+
+---
+
+# 🟢 **3️⃣ Basic Example – How ThreadLocal Works**
+
+```java id="tl2"
+public class Main {
+
+    private static ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+
+    public static void main(String[] args) {
+
+        Runnable task = () -> {
+            threadLocal.set((int) (Math.random() * 100));
+
+            System.out.println(Thread.currentThread().getName() +
+                    " Value: " + threadLocal.get());
+        };
+
+        new Thread(task).start();
+        new Thread(task).start();
+    }
+}
+```
+
+👉 Output:
+Each thread prints a different value
+👉 Even though same variable is used
+
+---
+
+# 🟡 **4️⃣ Real-World Usage – Request Context (Most Important ⭐)**
+
+In real backend systems (like Spring Boot), each HTTP request runs on a separate thread.
+
+You often need to store:
+
+* Logged-in user
+* Request ID
+* Transaction context
+
+Instead of passing this data everywhere, you store it in ThreadLocal.
+
+---
+
+## 🔹 **Spring Example (Very Important)**
+
+Spring Security uses:
+
+👉 `SecurityContextHolder`
+
+Internally, it stores:
+
+* Authenticated user
+* Roles
+* Security context
+
+👉 Using ThreadLocal
+
+So each request thread has its own **user context**.
+
+---
+
+# 🔴 **5️⃣ Internal Working (Conceptual Understanding)**
+
+Each thread has an internal structure:
+
+```text
+Thread → ThreadLocalMap → (ThreadLocal → Value)
+```
+
+👉 So:
+
+* ThreadLocal is the key
+* Value is stored inside the thread
+
+This is why values are isolated per thread.
+
+---
+
+# 🔵 **6️⃣ Memory Leak Risk – Most Critical Interview Point ⭐**
+
+This is where many developers fail.
+
+In thread pools:
+
+* Threads are reused
+* ThreadLocal values are NOT automatically cleared
+
+👉 Problem:
+
+Thread 1 handles Request A
+→ stores user data
+
+Thread reused for Request B
+→ old data still present ❌
+
+👉 This leads to:
+
+* Data leakage
+* Security issues
+* Memory leaks
+
+---
+
+## 🔥 **Real Danger Example**
+
+```java id="tl3"
+threadLocal.set("UserA");
+// Thread reused later...
+System.out.println(threadLocal.get()); // might still be UserA ❌
+```
+
+👉 This is a **serious production bug**
+
+---
+
+# 🟣 **7️⃣ Correct Practice – Always Remove (VERY IMPORTANT)**
+
+You must **manually clear ThreadLocal**.
+
+```java id="tl4"
+try {
+    threadLocal.set("UserA");
+
+    // business logic
+
+} finally {
+    threadLocal.remove(); // ✔️ critical
+}
+```
+
+👉 Always use `remove()` in `finally`
+
+---
+
+# 🟢 **8️⃣ Real Example – Request Handling**
+
+```java id="tl5"
+class RequestContext {
+
+    private static final ThreadLocal<String> userContext = new ThreadLocal<>();
+
+    public static void setUser(String user) {
+        userContext.set(user);
+    }
+
+    public static String getUser() {
+        return userContext.get();
+    }
+
+    public static void clear() {
+        userContext.remove();
+    }
+}
+```
+
+Usage:
+
+```java id="tl6"
+try {
+    RequestContext.setUser("Rabbani");
+
+    System.out.println(RequestContext.getUser());
+
+} finally {
+    RequestContext.clear();
+}
+```
+
+---
+
+# 🟡 **9️⃣ When to Use ThreadLocal**
+
+Use it when:
+
+* Data is specific to a thread
+* You want to avoid passing parameters everywhere
+* You need request-scoped data
+
+Examples:
+
+* User authentication
+* Logging context (MDC)
+* Transaction context
+
+---
+
+# 🔵 **🔟 When NOT to Use ThreadLocal**
+
+Avoid when:
+
+* Data must be shared across threads
+* You don’t control thread lifecycle
+* You forget cleanup
+
+---
+
+# 🟣 **1️⃣1️⃣ Interview-Level Answer (Strong Version)**
+
+If asked:
+
+👉 “What is ThreadLocal?”
+
+You should say:
+
+> ThreadLocal provides thread-specific storage where each thread has its own isolated copy of a variable. It is commonly used in web applications to store request context like user authentication. However, in thread pools, threads are reused, so ThreadLocal values can persist across requests if not cleared, leading to memory leaks and security issues. That’s why it is important to always call remove() in a finally block.
+
+---
+
+# 🔵 **1️⃣ Livelock & Starvation in Java – Advanced Concurrency Problems (Interview Set with Deadlock)**
+
+When discussing concurrency issues at an experienced level, interviewers expect you to go beyond **deadlock** and also explain **starvation and livelock**. All three are related but behave very differently.
+
+* **Deadlock** → Threads are blocked forever
+* **Starvation** → Thread never gets CPU/resources
+* **Livelock** → Threads are active but make no progress
+
+Understanding these differences shows real-world system thinking.
+
+---
+
+# 🟣 **2️⃣ Starvation – Thread Never Gets a Chance to Execute**
+
+Starvation occurs when a thread is **continuously denied access to resources or CPU time**, usually because other threads keep getting priority.
+
+This often happens in:
+
+* Priority-based scheduling
+* Unfair locks
+* Thread pools under heavy load
+
+👉 The thread is not blocked—it is just **never selected to run**
+
+---
+
+## 🟢 **Example – Starvation Scenario**
+
+```java id="starv1"
+import java.util.concurrent.locks.*;
+
+public class Main {
+    static ReentrantLock lock = new ReentrantLock(); // non-fair lock
+
+    public static void main(String[] args) {
+
+        Runnable task = () -> {
+            while (true) {
+                lock.lock();
+                try {
+                    System.out.println(Thread.currentThread().getName() + " got lock");
+                } finally {
+                    lock.unlock();
+                }
+            }
+        };
+
+        new Thread(task, "Thread-1").start();
+        new Thread(task, "Thread-2").start();
+    }
+}
+```
+
+👉 With non-fair locking:
+
+* One thread may repeatedly acquire lock
+* Other thread may **never get chance**
+
+---
+
+## 🔴 **Solution – Fair Lock**
+
+```java id="starv2"
+ReentrantLock lock = new ReentrantLock(true); // fair lock
+```
+
+👉 Ensures:
+
+* First-come-first-serve
+* Prevents starvation
+
+---
+
+## 🟡 **Real Understanding**
+
+Think of a queue:
+
+* Starvation = someone keeps getting skipped in line
+
+---
+
+# 🔵 **3️⃣ Livelock – Threads Active but No Progress**
+
+Livelock is more subtle and tricky than deadlock.
+
+👉 In livelock:
+
+* Threads are NOT blocked
+* Threads keep reacting to each other
+* But **no actual work is completed**
+
+---
+
+## 🟣 **Real-World Analogy**
+
+Two people in a hallway:
+
+* Both try to move aside
+* Both move same direction
+* Repeat forever
+
+👉 They are active, but stuck
+
+---
+
+## 🟢 **Example – Livelock Scenario**
+
+```java id="live1"
+class Worker {
+    private String name;
+    private boolean active = true;
+
+    public Worker(String name) {
+        this.name = name;
+    }
+
+    public void work(Worker other) {
+        while (active) {
+            if (other.active) {
+                System.out.println(name + " says: you go first...");
+                continue;
+            }
+
+            System.out.println(name + " is working");
+            active = false;
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Worker w1 = new Worker("Worker-1");
+        Worker w2 = new Worker("Worker-2");
+
+        new Thread(() -> w1.work(w2)).start();
+        new Thread(() -> w2.work(w1)).start();
+    }
+}
+```
+
+👉 Both threads keep yielding to each other
+👉 No progress is made
+
+---
+
+# 🔴 **4️⃣ Solution for Livelock – Add Randomness / Backoff**
+
+The fix is to **break symmetry** so threads don’t behave identically.
+
+```java id="live2"
+import java.util.Random;
+
+Random random = new Random();
+
+Thread.sleep(random.nextInt(100));
+```
+
+👉 Adding randomness:
+
+* Prevents repeated same behavior
+* Allows one thread to proceed
+
+---
+
+# 🟡 **5️⃣ Key Difference – Deadlock vs Livelock vs Starvation**
+
+Let’s understand clearly:
+
+* Deadlock → Threads are blocked forever
+* Starvation → Thread is waiting forever due to unfair scheduling
+* Livelock → Threads are running but not progressing
+
+👉 Very common interview comparison question
+
+---
+
+# 🔵 **6️⃣ Real-World Impact (Production Systems)**
+
+These issues occur in:
+
+* High concurrency systems
+* Banking systems (transactions)
+* Distributed systems
+* Thread pools and locks
+
+Examples:
+
+* Starvation → low-priority tasks never executed
+* Livelock → retry loops in APIs never succeed
+* Deadlock → system freeze
+
+---
+
+# 🟣 **7️⃣ Interview-Level Answer (Strong Version)**
+
+If asked:
+
+👉 “Explain deadlock, livelock, and starvation”
+
+You should say:
+
+> Deadlock occurs when threads are blocked forever waiting for each other. Starvation happens when a thread never gets CPU or resources because others keep executing, often due to unfair scheduling. Livelock occurs when threads are active and responding to each other but fail to make progress. Starvation can be solved using fair locks like ReentrantLock(true), and livelock is usually fixed by adding randomness or backoff to retry logic.
+
+---
