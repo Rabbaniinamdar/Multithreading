@@ -3033,7 +3033,7 @@ A strong answer doesn’t just say “which is faster” — it says:
 
 ---
 
-# 🔵 **1️⃣ ExecutorService in Java – Managing Threads the Right Way**
+## 🔵 **1️⃣ ExecutorService in Java – Managing Threads the Right Way**
 
 In modern Java applications, especially in backend systems like Spring Boot, we **do not create threads manually** using `new Thread()`. Instead, we use the **ExecutorService**, which provides a higher-level abstraction for managing threads efficiently.
 
@@ -3043,7 +3043,7 @@ In simple terms, ExecutorService acts like a **thread manager** that takes tasks
 
 ---
 
-# 🟣 **2️⃣ Why ExecutorService is Needed (Real-World Thinking)**
+## 🟣 **2️⃣ Why ExecutorService is Needed (Real-World Thinking)**
 
 Creating threads manually has several problems. Every time you create a thread, the JVM needs to allocate memory, manage scheduling, and eventually clean it up. If your application receives thousands of requests, creating thousands of threads can lead to **performance issues or even crashes**.
 
@@ -3606,7 +3606,7 @@ Here, you are using ExecutorService, but internally it is backed by **ThreadPool
 
 ---
 
-# 🟢 **3️⃣ What is ThreadPoolExecutor? (Actual Implementation)**
+## 🟢 **3️⃣ What is ThreadPoolExecutor? (Actual Implementation)**
 
 `ThreadPoolExecutor` is the **real class that does the work**. It gives you full control over:
 
@@ -3643,7 +3643,7 @@ public class Main {
 
 ---
 
-# 🟡 **4️⃣ Internal Relationship (Very Important Concept)**
+## 🟡 **4️⃣ Internal Relationship (Very Important Concept)**
 
 When you write:
 
@@ -3668,7 +3668,7 @@ new ThreadPoolExecutor(
 
 ---
 
-# 🔴 **5️⃣ Key Difference – Control vs Simplicity**
+## 🔴 **5️⃣ Key Difference – Control vs Simplicity**
 
 The main difference between the two lies in **level of control**.
 
@@ -3678,7 +3678,7 @@ ThreadPoolExecutor, on the other hand, gives you full control over how threads b
 
 ---
 
-# 🔵 **6️⃣ When to Use What (Real Project Decision)**
+## 🔵 **6️⃣ When to Use What (Real Project Decision)**
 
 In real-world applications, the choice depends on your needs.
 
@@ -3903,7 +3903,7 @@ This is how **errors flow back from thread pool tasks** to the calling thread.
 
 ---
 
-# 🔵 **6️⃣ Complete Example – Result + Exception Handling**
+## 🔵 **6️⃣ Complete Example – Result + Exception Handling**
 
 ```java
 import java.util.concurrent.*;
@@ -3941,7 +3941,7 @@ This example clearly shows:
 
 ---
 
-# 🟣 **7️⃣ Real-World Understanding**
+## 🟣 **7️⃣ Real-World Understanding**
 
 Think of it like ordering food 🍔:
 
@@ -3952,7 +3952,7 @@ Think of it like ordering food 🍔:
 
 ---
 
-# 🟢 **8️⃣ When You Use Callable & Future in Real Projects**
+## 🟢 **8️⃣ When You Use Callable & Future in Real Projects**
 
 In real systems like yours, this pattern is used in:
 
@@ -3970,7 +3970,7 @@ Whenever you need:
 
 ---
 
-# 🟡 **9️⃣ Interview-Level Answer (Strong Version)**
+## 🟡 **9️⃣ Interview-Level Answer (Strong Version)**
 
 If asked:
 
@@ -3991,7 +3991,7 @@ this is the **clean, interview-ready pattern** that combines:
 
 ---
 
-# 🚀 Perfect Pattern: Progress + Timeout + Cancel
+## 🚀 Perfect Pattern: Progress + Timeout + Cancel
 
 ```java
 import java.util.concurrent.*;
@@ -4052,7 +4052,7 @@ public class Main {
 
 ---
 
-# 🧠 What’s happening step-by-step
+## 🧠 What’s happening step-by-step
 
 ### ⏱ Timeline (Task = 5 sec, Timeout = 3 sec)
 
@@ -4070,7 +4070,7 @@ Using fallback value: -1
 
 ---
 
-# 🔍 Why this pattern is powerful
+## 🔍 Why this pattern is powerful
 
 ### ✅ 1. Non-blocking monitoring
 
@@ -4144,7 +4144,7 @@ Thread.sleep(1000);
 * Observability ✅
 
 ---
-# 🔵 **1️⃣ CompletableFuture in Java – Modern Asynchronous Programming (Non-Blocking Thinking)**
+## 🔵 **1️⃣ CompletableFuture in Java – Modern Asynchronous Programming (Non-Blocking Thinking)**
 
 In modern Java backend systems, especially in Spring Boot applications, `CompletableFuture` is one of the most important tools for handling **asynchronous, non-blocking workflows**. Unlike `Future`, which forces you to block and wait for results using `get()`, `CompletableFuture` allows you to **define what should happen when the result becomes available**, without blocking the main thread.
 
@@ -4159,7 +4159,7 @@ This is why `CompletableFuture` is widely used in:
 
 ---
 
-# 🟣 **2️⃣ Creating Async Tasks – supplyAsync()**
+## 🟣 **2️⃣ Creating Async Tasks – supplyAsync()**
 
 The most common way to create a CompletableFuture is using `supplyAsync()`, which runs a task asynchronously and returns a future result.
 
@@ -4188,7 +4188,7 @@ Here:
 
 ---
 
-# 🟢 **3️⃣ Chaining Operations – Core Power of CompletableFuture**
+## 🟢 **3️⃣ Chaining Operations – Core Power of CompletableFuture**
 
 The real power of `CompletableFuture` is in **chaining multiple operations**.
 
@@ -4235,7 +4235,7 @@ f1.thenCombine(f2, (a, b) -> a + b)
 
 ---
 
-# 🔴 **4️⃣ Exception Handling – exceptionally()**
+## 🔴 **4️⃣ Exception Handling – exceptionally()**
 
 Handling errors in async flow is very important.
 
@@ -4255,7 +4255,7 @@ CompletableFuture.supplyAsync(() -> {
 
 ---
 
-# 🔵 **5️⃣ Non-Blocking Nature – Most Important Concept ⭐**
+## 🔵 **5️⃣ Non-Blocking Nature – Most Important Concept ⭐**
 
 Unlike `Future.get()`, which blocks:
 
@@ -4278,7 +4278,7 @@ This is the biggest advantage and most asked interview point.
 
 ---
 
-# 🟣 **6️⃣ Real-World Example – Parallel API Calls**
+## 🟣 **6️⃣ Real-World Example – Parallel API Calls**
 
 Imagine calling two services:
 
@@ -4297,7 +4297,7 @@ userFuture.thenCombine(orderFuture, (user, order) -> user + " + " + order)
 
 ---
 
-# 🟢 **7️⃣ Spring Boot Connection (Very Important ⭐)**
+## 🟢 **7️⃣ Spring Boot Connection (Very Important ⭐)**
 
 In Spring Boot, when you use:
 
@@ -4317,7 +4317,7 @@ This is how async APIs work in production.
 
 ---
 
-# 🟡 **8️⃣ CompletableFuture vs Future (Key Difference)**
+## 🟡 **8️⃣ CompletableFuture vs Future (Key Difference)**
 
 * Future → Blocking, limited
 * CompletableFuture → Non-blocking, chainable, powerful
@@ -4330,7 +4330,7 @@ CompletableFuture:
 
 ---
 
-# 🔵 **9️⃣ Interview-Level Answer (Strong Version)**
+## 🔵 **9️⃣ Interview-Level Answer (Strong Version)**
 
 If asked:
 
@@ -4342,7 +4342,7 @@ You should say:
 
 ---
 
-# 🔵 **1️⃣ CompletableFuture – Complete Methods Explanation (Interview + Real Usage Guide)**
+## 🔵 **1️⃣ CompletableFuture – Complete Methods Explanation (Interview + Real Usage Guide)**
 
 `CompletableFuture` is not just about async execution—it provides a **rich set of methods to build non-blocking pipelines**. Instead of memorizing randomly, you should understand them in categories based on **what they do in the lifecycle of async computation**.
 
@@ -4350,13 +4350,13 @@ We will go step-by-step in a way that even beginners can understand, but with de
 
 ---
 
-# 🟣 **2️⃣ Creating CompletableFuture (Starting Point Methods)**
+## 🟣 **2️⃣ Creating CompletableFuture (Starting Point Methods)**
 
 Every async pipeline starts here.
 
 ---
 
-## 🔹 **supplyAsync() – Returns Result**
+### 🔹 **supplyAsync() – Returns Result**
 
 ```java id="cfm1"
 CompletableFuture<Integer> future =
@@ -4367,7 +4367,7 @@ This runs a task asynchronously and returns a result.
 
 ---
 
-## 🔹 **runAsync() – No Result**
+### 🔹 **runAsync() – No Result**
 
 ```java id="cfm2"
 CompletableFuture<Void> future =
@@ -4387,11 +4387,11 @@ Used when no return value is needed.
 
 ---
 
-# 🟢 **3️⃣ Transforming Results (thenApply vs thenCompose)**
+## 🟢 **3️⃣ Transforming Results (thenApply vs thenCompose)**
 
 ---
 
-## 🔹 **thenApply() – Transform Result**
+### 🔹 **thenApply() – Transform Result**
 
 ```java id="cfm3"
 CompletableFuture.supplyAsync(() -> 10)
@@ -4403,7 +4403,7 @@ CompletableFuture.supplyAsync(() -> 10)
 
 ---
 
-## 🔹 **thenCompose() – Chain Async Calls**
+### 🔹 **thenCompose() – Chain Async Calls**
 
 ```java id="cfm4"
 CompletableFuture.supplyAsync(() -> 10)
@@ -4416,11 +4416,11 @@ CompletableFuture.supplyAsync(() -> 10)
 
 ---
 
-# 🟡 **4️⃣ Consuming Results (thenAccept vs thenRun)**
+## 🟡 **4️⃣ Consuming Results (thenAccept vs thenRun)**
 
 ---
 
-## 🔹 **thenAccept() – Use Result**
+### 🔹 **thenAccept() – Use Result**
 
 ```java id="cfm5"
 future.thenAccept(result -> {
@@ -4432,7 +4432,7 @@ future.thenAccept(result -> {
 
 ---
 
-## 🔹 **thenRun() – Just Run Task**
+### 🔹 **thenRun() – Just Run Task**
 
 ```java id="cfm6"
 future.thenRun(() -> {
@@ -4444,11 +4444,11 @@ future.thenRun(() -> {
 
 ---
 
-# 🔴 **5️⃣ Combining Multiple Futures (Parallel Processing)**
+## 🔴 **5️⃣ Combining Multiple Futures (Parallel Processing)**
 
 ---
 
-## 🔹 **thenCombine() – Combine Two Results**
+### 🔹 **thenCombine() – Combine Two Results**
 
 ```java id="cfm7"
 CompletableFuture<Integer> f1 = CompletableFuture.supplyAsync(() -> 10);
@@ -4462,7 +4462,7 @@ f1.thenCombine(f2, (a, b) -> a + b)
 
 ---
 
-## 🔹 **allOf() – Wait for All**
+### 🔹 **allOf() – Wait for All**
 
 ```java id="cfm8"
 CompletableFuture.allOf(f1, f2)
@@ -4475,7 +4475,7 @@ CompletableFuture.allOf(f1, f2)
 
 ---
 
-## 🔹 **anyOf() – First Completed**
+### 🔹 **anyOf() – First Completed**
 
 ```java id="cfm9"
 CompletableFuture.anyOf(f1, f2)
@@ -4486,11 +4486,11 @@ CompletableFuture.anyOf(f1, f2)
 
 ---
 
-# 🔵 **6️⃣ Handling Exceptions (Critical for Interviews ⭐)**
+## 🔵 **6️⃣ Handling Exceptions (Critical for Interviews ⭐)**
 
 ---
 
-## 🔹 **exceptionally() – Handle Error**
+### 🔹 **exceptionally() – Handle Error**
 
 ```java id="cfm10"
 CompletableFuture.supplyAsync(() -> {
@@ -4507,7 +4507,7 @@ CompletableFuture.supplyAsync(() -> {
 
 ---
 
-## 🔹 **handle() – Always Runs (Success + Failure)**
+### 🔹 **handle() – Always Runs (Success + Failure)**
 
 ```java id="cfm11"
 future.handle((result, ex) -> {
@@ -4522,7 +4522,7 @@ future.handle((result, ex) -> {
 
 ---
 
-## 🔹 **whenComplete() – Side Effect Only**
+### 🔹 **whenComplete() – Side Effect Only**
 
 ```java id="cfm12"
 future.whenComplete((result, ex) -> {
@@ -4534,7 +4534,7 @@ future.whenComplete((result, ex) -> {
 
 ---
 
-# 🟣 **7️⃣ Async Variants (Thread Control)**
+## 🟣 **7️⃣ Async Variants (Thread Control)**
 
 Every major method has an async version:
 
@@ -4552,11 +4552,11 @@ CompletableFuture.supplyAsync(() -> "Hello")
 
 ---
 
-# 🟢 **8️⃣ Completion Control Methods**
+## 🟢 **8️⃣ Completion Control Methods**
 
 ---
 
-## 🔹 **complete() – Manually Complete**
+### 🔹 **complete() – Manually Complete**
 
 ```java id="cfm14"
 CompletableFuture<String> future = new CompletableFuture<>();
@@ -4565,7 +4565,7 @@ future.complete("Done");
 
 ---
 
-## 🔹 **completeExceptionally()**
+### 🔹 **completeExceptionally()**
 
 ```java id="cfm15"
 future.completeExceptionally(new RuntimeException("Error"));
@@ -4577,11 +4577,11 @@ future.completeExceptionally(new RuntimeException("Error"));
 
 ---
 
-# 🟡 **9️⃣ Blocking Methods (Use Carefully ⚠️)**
+## 🟡 **9️⃣ Blocking Methods (Use Carefully ⚠️)**
 
 ---
 
-## 🔹 **get() – Blocking**
+### 🔹 **get() – Blocking**
 
 ```java id="cfm16"
 future.get();
@@ -4589,7 +4589,7 @@ future.get();
 
 ---
 
-## 🔹 **join() – Non-Checked Exception**
+### 🔹 **join() – Non-Checked Exception**
 
 ```java id="cfm17"
 future.join();
@@ -4599,7 +4599,7 @@ future.join();
 
 ---
 
-# 🔴 **🔟 Real-World Example (Spring Boot Style)**
+## 🔴 **🔟 Real-World Example (Spring Boot Style)**
 
 ```java id="cfm18"
 CompletableFuture<String> user =
@@ -4615,7 +4615,7 @@ return user.thenCombine(order, (u, o) -> u + " " + o);
 
 ---
 
-# 🔵 **1️⃣1️⃣ How to Remember (Simple Mental Model)**
+## 🔵 **1️⃣1️⃣ How to Remember (Simple Mental Model)**
 
 Instead of memorizing:
 
@@ -4628,7 +4628,7 @@ Instead of memorizing:
 
 ---
 
-# 🟣 **1️⃣2️⃣ Interview-Level Answer**
+## 🟣 **1️⃣2️⃣ Interview-Level Answer**
 
 If asked:
 
@@ -4640,7 +4640,7 @@ You should say:
 
 ---
 
-# 🔵 **1️⃣ ThreadLocal in Java – Per-Thread Storage (Critical for Web Apps)**
+## 🔵 **1️⃣ ThreadLocal in Java – Per-Thread Storage (Critical for Web Apps)**
 
 `ThreadLocal<T>` is a special utility in Java that allows you to create **thread-specific variables**. Instead of sharing a variable across multiple threads, each thread gets its **own isolated copy**.
 
@@ -4652,7 +4652,7 @@ This is extremely useful in multi-threaded environments like **web applications*
 
 ---
 
-# 🟣 **2️⃣ Why ThreadLocal is Needed (Real Problem)**
+## 🟣 **2️⃣ Why ThreadLocal is Needed (Real Problem)**
 
 In multi-threading, if multiple threads access the same variable, it leads to:
 
@@ -4670,7 +4670,7 @@ Each thread will store and retrieve its own value independently.
 
 ---
 
-# 🟢 **3️⃣ Basic Example – How ThreadLocal Works**
+## 🟢 **3️⃣ Basic Example – How ThreadLocal Works**
 
 ```java id="tl2"
 public class Main {
@@ -4698,7 +4698,7 @@ Each thread prints a different value
 
 ---
 
-# 🟡 **4️⃣ Real-World Usage – Request Context (Most Important ⭐)**
+## 🟡 **4️⃣ Real-World Usage – Request Context (Most Important ⭐)**
 
 In real backend systems (like Spring Boot), each HTTP request runs on a separate thread.
 
@@ -4712,7 +4712,7 @@ Instead of passing this data everywhere, you store it in ThreadLocal.
 
 ---
 
-## 🔹 **Spring Example (Very Important)**
+### 🔹 **Spring Example (Very Important)**
 
 Spring Security uses:
 
@@ -4730,7 +4730,7 @@ So each request thread has its own **user context**.
 
 ---
 
-# 🔴 **5️⃣ Internal Working (Conceptual Understanding)**
+## 🔴 **5️⃣ Internal Working (Conceptual Understanding)**
 
 Each thread has an internal structure:
 
@@ -4747,7 +4747,7 @@ This is why values are isolated per thread.
 
 ---
 
-# 🔵 **6️⃣ Memory Leak Risk – Most Critical Interview Point ⭐**
+## 🔵 **6️⃣ Memory Leak Risk – Most Critical Interview Point ⭐**
 
 This is where many developers fail.
 
@@ -4772,7 +4772,7 @@ Thread reused for Request B
 
 ---
 
-## 🔥 **Real Danger Example**
+### 🔥 **Real Danger Example**
 
 ```java id="tl3"
 threadLocal.set("UserA");
@@ -4784,7 +4784,7 @@ System.out.println(threadLocal.get()); // might still be UserA ❌
 
 ---
 
-# 🟣 **7️⃣ Correct Practice – Always Remove (VERY IMPORTANT)**
+## 🟣 **7️⃣ Correct Practice – Always Remove (VERY IMPORTANT)**
 
 You must **manually clear ThreadLocal**.
 
@@ -4803,7 +4803,7 @@ try {
 
 ---
 
-# 🟢 **8️⃣ Real Example – Request Handling**
+## 🟢 **8️⃣ Real Example – Request Handling**
 
 ```java id="tl5"
 class RequestContext {
@@ -4839,7 +4839,7 @@ try {
 
 ---
 
-# 🟡 **9️⃣ When to Use ThreadLocal**
+## 🟡 **9️⃣ When to Use ThreadLocal**
 
 Use it when:
 
@@ -4855,7 +4855,7 @@ Examples:
 
 ---
 
-# 🔵 **🔟 When NOT to Use ThreadLocal**
+## 🔵 **🔟 When NOT to Use ThreadLocal**
 
 Avoid when:
 
@@ -4865,7 +4865,7 @@ Avoid when:
 
 ---
 
-# 🟣 **1️⃣1️⃣ Interview-Level Answer (Strong Version)**
+## 🟣 **1️⃣1️⃣ Interview-Level Answer (Strong Version)**
 
 If asked:
 
@@ -4877,7 +4877,7 @@ You should say:
 
 ---
 
-# 🔵 **1️⃣ Livelock & Starvation in Java – Advanced Concurrency Problems (Interview Set with Deadlock)**
+## 🔵 **1️⃣ Livelock & Starvation in Java – Advanced Concurrency Problems (Interview Set with Deadlock)**
 
 When discussing concurrency issues at an experienced level, interviewers expect you to go beyond **deadlock** and also explain **starvation and livelock**. All three are related but behave very differently.
 
@@ -4889,7 +4889,7 @@ Understanding these differences shows real-world system thinking.
 
 ---
 
-# 🟣 **2️⃣ Starvation – Thread Never Gets a Chance to Execute**
+## 🟣 **2️⃣ Starvation – Thread Never Gets a Chance to Execute**
 
 Starvation occurs when a thread is **continuously denied access to resources or CPU time**, usually because other threads keep getting priority.
 
@@ -4937,7 +4937,7 @@ public class Main {
 
 ---
 
-## 🔴 **Solution – Fair Lock**
+### 🔴 **Solution – Fair Lock**
 
 ```java id="starv2"
 ReentrantLock lock = new ReentrantLock(true); // fair lock
@@ -4950,7 +4950,7 @@ ReentrantLock lock = new ReentrantLock(true); // fair lock
 
 ---
 
-## 🟡 **Real Understanding**
+### 🟡 **Real Understanding**
 
 Think of a queue:
 
@@ -4958,7 +4958,7 @@ Think of a queue:
 
 ---
 
-# 🔵 **3️⃣ Livelock – Threads Active but No Progress**
+## 🔵 **3️⃣ Livelock – Threads Active but No Progress**
 
 Livelock is more subtle and tricky than deadlock.
 
@@ -4970,7 +4970,7 @@ Livelock is more subtle and tricky than deadlock.
 
 ---
 
-## 🟣 **Real-World Analogy**
+### 🟣 **Real-World Analogy**
 
 Two people in a hallway:
 
@@ -4982,7 +4982,7 @@ Two people in a hallway:
 
 ---
 
-## 🟢 **Example – Livelock Scenario**
+### 🟢 **Example – Livelock Scenario**
 
 ```java id="live1"
 class Worker {
@@ -5023,7 +5023,7 @@ public class Main {
 
 ---
 
-# 🔴 **4️⃣ Solution for Livelock – Add Randomness / Backoff**
+## 🔴 **4️⃣ Solution for Livelock – Add Randomness / Backoff**
 
 The fix is to **break symmetry** so threads don’t behave identically.
 
@@ -5042,7 +5042,7 @@ Thread.sleep(random.nextInt(100));
 
 ---
 
-# 🟡 **5️⃣ Key Difference – Deadlock vs Livelock vs Starvation**
+## 🟡 **5️⃣ Key Difference – Deadlock vs Livelock vs Starvation**
 
 Let’s understand clearly:
 
@@ -5054,7 +5054,7 @@ Let’s understand clearly:
 
 ---
 
-# 🔵 **6️⃣ Real-World Impact (Production Systems)**
+## 🔵 **6️⃣ Real-World Impact (Production Systems)**
 
 These issues occur in:
 
@@ -5071,7 +5071,7 @@ Examples:
 
 ---
 
-# 🟣 **7️⃣ Interview-Level Answer (Strong Version)**
+## 🟣 **7️⃣ Interview-Level Answer (Strong Version)**
 
 If asked:
 
