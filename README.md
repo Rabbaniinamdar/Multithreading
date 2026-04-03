@@ -2,7 +2,7 @@
 
 **Multithreading** means executing **multiple tasks at the same time within a single program** by using multiple **threads**. Instead of a program doing one thing, finishing it, and then starting the next, multithreading allows different parts of the program to run **concurrently**.
 
-For example, in **MS Word**, while you are typing text, the spell checker runs in the background and the auto-save feature keeps saving your document. These tasks feel simultaneous because they are handled by **different threads** inside the same program.
+For example, in **MS Word**, while you are typing text, the spell checker runs in the background, and the auto-save feature keeps saving your document. These tasks feel simultaneous because different threads handle them within the same program.
 
 The key idea is that **all threads belong to the same process and share the same memory**, which makes multithreading lightweight and fast compared to running multiple programs.
 
